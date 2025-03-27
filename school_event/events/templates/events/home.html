@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Event Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        /* Animated Gradient Background */
+        body {
+            background: url('https://evergreengroup.in/wp-content/uploads/2017/07/Arya-Gurukul-School-Annual-Day-14-1024x516.jpg') no-repeat center center/cover;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            text-align: center;
+            height: 100vh;
+            position: relative;
+        }
+
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 15px;
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00 !important;
+        }
+        
+        .nav-link {
+            color: white !important;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #ffcc00 !important;
+            transform: scale(1.1);
+        }
+
+        .hero-section {
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .btn-custom {
+            background: #ff4081;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: 0.4s;
+            text-decoration: none;
+        }
+
+        .btn-custom:hover {
+            background: #e91e63;
+            transform: scale(1.1);
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">School Event Management system</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'event_list' %}">Events</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1>Welcome to the School Event Management System</h1>
+        <p>Manage and participate in exciting school events with ease!</p>
+
+        {% if user.is_authenticated %}
+            <p class="fs-4">Hello, <strong>{{ user.username }}</strong>!</p>
+            <a href="{% url 'event_list' %}" class="btn btn-custom">View Events</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-custom">Login</a>
+            <a href="{% url 'signup' %}" class="btn btn-custom">Signup</a>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

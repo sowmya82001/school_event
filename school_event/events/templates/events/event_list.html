@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Events</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://evergreengroup.in/wp-content/uploads/2017/07/Arya-Gurukul-School-Annual-Day-14-1024x516.jpg') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center text-light mb-4">Upcoming Events</h2>
+        {% if user.is_authenticated %}
+            <div class="text-center mb-4">
+                <a href="{% url 'logout' %}" class="btn btn-danger me-2">Logout</a>
+                {% if user.role == "admin" %}
+                    <a href="{% url 'create_event' %}" class="btn btn-success">Create Event</a>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="row">
+            {% for event in events %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card text-light border-0 shadow-lg">
+                    <div class="card-body">
+                        <h3 class="card-title text-warning">{{ event.title }}</h3>
+                        <p class="card-text">{{ event.description }}</p>
+                        <p><strong>Date:</strong> {{ event.date }}</p>
+                        <p><strong>Location:</strong> {{ event.location }}</p>
+                        {% if user.is_authenticated and user.role == "student" %}
+                            
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="fs-4 text-light">No upcoming events at the moment.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
